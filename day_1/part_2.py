@@ -1,7 +1,7 @@
 from pathlib import Path
 
 def input_to_list():
-  with open(Path(__file__).with_name('input.txt')) as f:
+  with open(Path(__file__).with_name('input.txt'), 'r') as f:
     lines = [line for line in f]
   return lines
 
