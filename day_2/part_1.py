@@ -11,10 +11,9 @@ def get_game_id_and_data(line):
 
   return int(game_id), data
 
-
 def main():
   total = 0
-  
+
   for line in input_to_list():
     game_id, data = get_game_id_and_data(line)
     valid = True
