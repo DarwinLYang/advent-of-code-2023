@@ -5,29 +5,29 @@ def input_to_list():
     lines = [line for line in f]
   return lines
 
-def main():
-  def is_valid(original_x, original_y):
-    for x in range(max(original_x - 1, 0), min(original_x + 2, max_x)):
-      for y in range(max(original_y - 1, 0), min(original_y + 2, max_y)):
-        value = grid[x][y]
-        if not value.isdigit() and value != '.':
-          return True
-    return False
+def create_valid_grid(grid):
+  valid_grid = [[False for _ in range(len(grid[0]))] for _ in range(len(grid))]
+  for x, row in enumerate(grid):
+    for y, value in enumerate(row):
+      if not value.isdigit() and value != '.':
+        for valid_x in range(max(x - 1, 0), min(x + 2, len(grid))):
+          for valid_y in range(max(y - 1, 0), min(y + 2, len(grid[0]))):
+            valid_grid[valid_x][valid_y] = True
 
+  return valid_grid
+
+def main():
   input = input_to_list()
   grid = [list(row.strip()) for row in input]
-
-  max_x = len(grid)
-  max_y = len(grid[0])
-
+  valid_grid = create_valid_grid(grid)
+  
   total = 0
-
   for x, row in enumerate(grid):
     valid = False
     saved_num = ''
     for y, value in enumerate(row):
       if value.isdigit():
-        valid = is_valid(x, y)
+        valid = valid or valid_grid[x][y]
         saved_num += value
       else:
         if saved_num and valid:
